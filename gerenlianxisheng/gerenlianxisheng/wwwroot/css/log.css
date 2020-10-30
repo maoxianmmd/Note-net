@@ -1,0 +1,131 @@
+﻿.back {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 100%;
+    background: #0000007a;
+    z-index: 4;
+}
+
+#log_yemian {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 350px;
+    height: 300px;
+    border-radius: 3px;
+    background-color: white;
+    overflow: hidden;
+}
+
+#log_head {
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    background-color: #3de4a7a1;
+    box-shadow: 0 5px 3px #aaadac;
+}
+
+#log_cancel {
+    width: 10%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    left: 90%;
+}
+
+    #log_cancel span {
+        font-size: 30px;
+        font-family: "华文琥珀";
+        color: #ef1313;
+        cursor: pointer;
+    }
+
+#log_zhanghao {
+    width: 80%;
+    height: 10%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+    text-align: center;
+}
+
+#log_mima {
+    width: 80%;
+    height: 10%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 35%;
+    text-align: center;
+}
+
+#log_yanzhenma {
+    width: 80%;
+    height: 20%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+}
+
+#log_anniu {
+    width: 80%;
+    height: 15%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 80%;
+}
+
+.log_annius {
+    background-color: #00ffd061;
+    box-shadow: 2px 2px 3px #989898;
+    position: absolute;
+    width: 25%;
+    height: 50%;
+    border-radius: 5px;
+    border: 0 solid red;
+    color: #131415;
+}
+
+#log_anniu_zhuce {
+    left: 75%;
+    transform: translateX(-50%);
+}
+
+#log_anniu_logon {
+    left: 25%;
+    transform: translateX(-50%);
+}
+
+.log_input {
+    border-radius: 3px;
+    border: 2px solid #0bef9b;
+    height: 20px;
+}
+
+#inp_can {
+    position: absolute;
+    line-height: 10px;
+    overflow: hidden;
+    height: 40px;
+    width: 100px;
+    top: 15px;
+    left: 30px;
+}
+
+#inp_inp {
+    position: absolute;
+    float: left;
+    height: 40px;
+    width: 100px;
+    left: 140px;
+    top: 18px;
+}
+
+#yzm_input {
+    width: 100px;
+}

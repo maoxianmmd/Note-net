@@ -1,0 +1,145 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "笔记";
+}
+@section styles{
+    <link href="~/css/jiluyemian.css" rel="stylesheet" />
+}
+@*记录内容*@
+<div id="jilu">
+    <div class="jilu_table" v-for="a in body.tables">
+        @* 锚连接只能用id不能用name *@
+        <div class="jilu_table_title" :id="''+a.title">
+            <div style="float:right" v-if="body.torf">
+                <a v-on:click="method().delate(a)" class="changeordelate">删除</a>
+                <p class="changeordelate">/</p>
+                <a v-on:click="method().change(a)" class="changeordelate">修改</a>
+            </div>
+            <h4>{{a.title}}</h4>
+        </div>
+        <div class="jilu_table_neirong">
+            <p v-html="a.neirong"></p>
+        </div>
+    </div>
+</div>
+@*记录目录*@
+<div id="jilu_asid">
+    <div v-for="(a,indexa) in body.types">
+        <div class="jilu_asid_big" v-on:click="method().changehuadong(indexa)">
+            <h2>{{a.type_small}}</h2>
+        </div>
+        <div class="jilu_asid_boxs">
+            <div class="jilu_asid_small" v-for="b in a.mulu_small">
+                <a :href="'#'+b" style="text-decoration:none"><h3>{{b}}</h3></a>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var vm = {
+            data: {
+                tables: null,//记录数据[{bigtitle:"c#",id:1037;neirong:"<p>nihao</p>",smalltitle:".net Core",title:"c1"}]
+                torf: true,//当前记录是否为空
+                types: null,//数据分类目录[{show:1,type_small:".net Core",mulu_small:["title1","title2"]}]
+            },
+            methods: {
+                change: function (a) {
+                    verifylogin(function () {
+                        app.anniutype = "修改";
+                        $("#jiluback").css("top", "0");
+                        //避免初次点击出现的bug（vue一般比jq响应慢）
+                        app.type_change = a.bigtitle;
+                        $("#jilu_yuyan").val(a.bigtitle);
+                        $("#jilu_kuangjia").val(a.smalltitle);
+                        $("#jilu_title_title").val(a.title);
+                        editor.txt.html(a.neirong);
+                        $("#jilu_sure").click(function () {
+                            sureorcancel("提示", "是否确认修改？", function () {
+                                $.ajax({
+                                    data: {
+                                        id: a.id,
+                                        bigtitle: $("#jilu_yuyan").val(),
+                                        smalltitle: $("#jilu_kuangjia").val(),
+                                        title: $("#jilu_title_title").val(),
+                                        neirong: editor.txt.html()
+                                    },
+                                    dataType: "json",
+                                    type: "post",
+                                    url: '/Ajax/Change',
+                                    success: function (a) {
+                                        confirm("提示", a.result, function () {
+                                            //取消绑定的click事件
+                                            $("#jilu_sure").unbind("click");
+                                            location.reload();
+                                        });
+                                    },
+                                    error: function (a) {
+                                        $("#jilu_sure").unbind("click");
+                                        confirm("错误", a.result, function () { });
+                                    }
+                                })
+                            })
+                        });
+                    });
+                },
+                delate: function (a) {
+                    verifylogin(function () {
+                        sureorcancel("注意！", "是否确认删除？", function () {
+                            $.ajax({
+                                data: { id: a.id },
+                                dataType: "json",
+                                type: "post",
+                                url: '/Ajax/Delete',
+                                success: function (a) {
+                                    confirm("提示", a.result, function () {
+                                        location.reload();
+                                    });
+                                },
+                                error: function (a) {
+                                    $("#jilu_sure").unbind("click");
+                                    confirm("错误", a.result, function () { });
+                                }
+                            })
+                        })
+                    });
+                },
+                load: function (a) {
+                    for (var i = 0; i < app.asid_tables.length; i++) {
+                        if (a == ("type=" + app.asid_tables[i].type)) {
+                            $.ajax({
+                                data: { 'type': app.asid_tables[i].type },
+                                dataType: 'json',
+                                type: "post",
+                                url: '/Ajax/TitleAndNerong',
+                                success: function (a) {
+                                    vm.data.tables = a.result.tables;
+                                    vm.data.types = a.result.types;
+                                },
+                                error: function (a) { confirm("错误", a.result, function () { }); }
+                            });
+                        }
+                    }
+                },
+                changehuadong: function (a) {
+                    if (vm.data.types[a].show == 1) {
+                        $(".jilu_asid_boxs").eq(a).slideUp();
+                        vm.data.types[a].show = -1 * vm.data.types[a].show;
+                    } else if (vm.data.types[a].show == -1) {
+                        $(".jilu_asid_boxs").eq(a).slideDown();
+                        for (var i = 0; i < vm.data.types.length; i++) {
+                            if (vm.data.types[i].show == 1) {
+                                $(".jilu_asid_boxs").eq(i).slideUp();
+                                vm.data.types[i].show = -1 * vm.data.types[i].show;
+                            }
+                        }
+                        vm.data.types[a].show = -1 * vm.data.types[a].show;
+                    }
+                }
+            },
+        }
+        $(function () {
+            vm.methods.load(document.cookie);
+        })
+    </script>
+}

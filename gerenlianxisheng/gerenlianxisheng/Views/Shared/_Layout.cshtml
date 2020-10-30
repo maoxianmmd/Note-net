@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>毛线实验室-@ViewData["Title"]</title>
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/vue.js"></script>
+    <link href="~/css/_Layout.css" rel="stylesheet" />
+    <link href="~/css/log.css" rel="stylesheet" />
+    <link href="~/css/newback.css" rel="stylesheet" />
+    <link href="~/css/surebox.css" rel="stylesheet" />
+    <link href="~/css/confirmt.css" rel="stylesheet" />
+    <script src="~/js/yanzhenma.js"></script>
+    <script type="text/javascript" src="~/wangEditor-3.1.1/release/wangEditor.min.js"></script>
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div id="app">
+        <div id="head">
+            <div class="head-words">
+                <a href="~/Home/Index" class="head-text">毛线实验室</a>
+            </div>
+            <div class="head-words">
+                <a v-on:click="addnew" class="head-text">新增</a>
+            </div>
+        </div>
+        @* 可拖拽圆球 *@
+        <div id="asid" draggable="false">
+            @* 可拖拽目录 *@
+            <div id="asid-mulu">
+                <div id="asid-mulu-title">
+                    <div id="asid-mulu-title-mulu">
+                        <h1>目录</h1>
+                    </div>
+                    <div id="asid-mulu-title-tuodong">
+                        <p>✝拖动✝</p>
+                    </div>
+                    <div id="asid-mulu-table">
+                        <div v-for="a in asid_tables">
+                            <div class="asid-gezi" v-on:click="tourl(a)">
+                                <a class="head-text"><h3>{{a.name}}</h3></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+        </div>
+        <div id="foot"></div>
+        @* 新增或修改界面 *@
+        <div id="jiluback" class="back">
+            <div id="jilu_yemian">
+                <div id="jilu_head">
+                    <div id="box_cancel" onclick='cancel("#jiluback","jilu_yuyan","jilu_kuangjia","jilu_title_title","editor")'><span>×</span></div>
+                </div>
+                <div id="jilu_titletext">
+                    <h2>{{anniutype}}</h2>
+                </div>
+                <div id="jilu_types" class="jilusclass">
+                    <div id="jilu_type_big">
+                        <div>
+                            <span>语言：</span><input id="jilu_yuyan" type="text" list="type_big_data" placeholder="请输入或选择语言" v-model="type_change" />
+                            <datalist id="type_big_data">
+                                <option v-for="a in type_big_lists">{{a.big}}</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div id="jilu_type_small">
+                        <div>
+                            <span>种类：</span><input id="jilu_kuangjia" type="text" list="type_small_data" placeholder="请输入或选择种类" />
+                            <datalist id="type_small_data">
+                                <option v-for="a in type_small_lists">{{a.value}}</option>
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+                <div id="jilu_title" class="jilusclass">
+                    <span>标题：</span><input id="jilu_title_title" type="text" placeholder="请输入标题" />
+                </div>
+                <div id="jilu_neirong" class="jilusclass">
+                    <div id="editor"></div>
+                </div>
+                <div id="jilu_annius" class="jilusclass">
+                    <button id="jilu_sure">确定</button>
+                    <button id="jilu_cancel" onclick='cancel("#jiluback","jilu_yuyan","jilu_kuangjia","jilu_title_title","editor")'>取消</button>
+                </div>
+            </div>
+        </div>
+        @* 登录界面 *@
+        <div id="logback" class="back">
+            <div id="log_yemian">
+                <div id="log_head">
+                    <div id="log_cancel" onclick='cancel("#logback","zhanghao_input","mima_input","yzm_input")'><span>×</span></div>
+                </div>
+                <div id="log_zhanghao">
+                    <span>账号：</span><span><input id="zhanghao_input" type="text" class="log_input" placeholder="请输入账号" /></span>
+                </div>
+                <div id="log_mima">
+                    <span>密码：</span><span><input id="mima_input" type="text" class="log_input" placeholder="请输入密码" /></span>
+                </div>
+                <div id="log_yanzhenma">
+                    <div id="inp_can"><canvas id="yzm1" width="100" height="30"></canvas></div><div id="inp_inp"><input id="yzm_input" type="text" class="log_input" placeholder="请输入验证码" /></div>
+                </div>
+                <div id="log_anniu">
+                    <button id="log_anniu_logon" class="log_annius">登录</button>
+                    <button id="log_anniu_zhuce" class="log_annius" onclick='cancel("#logback","zhanghao_input","mima_input","yzm_input")'>取消</button>
+                </div>
+            </div>
+        </div>
+        @* 选择框 *@
+        <div id="sureboxback" class="back">
+            <div id="surebox_yemian">
+                <div id="surebox_head">
+                    <h2>{{surebox.title}}</h2>
+                </div>
+                <div id="surebox_body">
+                    <h3>{{surebox.neirong}}</h3>
+                </div>
+                <div id="surebox_foot">
+                    <button id="surebox_anniu_sure" class="log_annius">确定</button>
+                    <button id="surebox_anniu_cancel" class="log_annius">取消</button>
+                </div>
+            </div>
+        </div>
+        @* 确认框 *@
+        <div id="confirmback" class="back">
+            <div id="confirm_yemian">
+                <div id="confirm_head">
+                    <h2>{{confirm.title}}</h2>
+                </div>
+                <div id="confirm_body">
+                    <h3>{{confirm.neirong}}</h3>
+                </div>
+                <div id="confirm_foot">
+                    <button id="confirm_anniu" class="log_annius">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+<script type="text/javascript">
+        $(function () {
+            $("#asid").mouseover(function () {
+                $("#asid-mulu").css("display", "inline");
+            });
+            $("#asid-mulu").mouseout(function () {
+                $("#asid-mulu").css("display", "none");
+            });
+            tuozhuai("asid");
+        })
+        //登录验证
+        function verifylogin(fun) {
+            var session =@ViewBag.session;
+            //法二 由于需要请求，最好不使用
+            //$.ajax({
+            //    url: '/Ajax/VerifyLogin',
+            //    type: "post",
+            //    //ajax默认是异步事件改为同步事件
+            //    async:false,
+            //    success: function (a) {
+            //        session = a.result;
+            //    },
+            //    error: function (a) {
+            //        $("#jilu_sure").unbind("click");
+            //        confirm("错误", a.result, function () { });
+            //    }
+            //});
+            
+            if (session != '1') {
+                $("#logback").css("top", "0");
+            } else {
+                fun();
+            }
+        }
+        //关闭/取消方法
+        function cancel(a) {
+            for (var i = 1; i < arguments.length; i++) {
+                if (arguments[i] == "editor") {
+                    editor.txt.html("");
+                } else {
+                    $("#" + arguments[i]).val("");
+                }
+            }
+            //取消绑定的click事件
+            $("#jilu_sure").unbind("click");
+            $(a).css("top", "100%");
+        }
+        //拖拽函数
+        function tuozhuai(box) {
+            var box1 = document.getElementById(box);
+            box1.onmousedown = function (a) {
+                a = a || window.a;
+                /**
+                 * offsetTop offsetLeft是元素顶部/左边边距相对于网页的距离
+                 * */
+                var tpp = a.clientY - box1.offsetTop;
+                var lff = a.clientX - box1.offsetLeft;
+                document.onmousemove = function (a) {
+                    a = a || window.a;
+                    box1.style.top = a.clientY - tpp + "px";
+                    box1.style.left = a.clientX - lff + "px";
+                };
+                document.onmouseup = function () {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                };
+            }
+        }
+        //选择框方法
+        function sureorcancel(title, neirong, fun) {
+            app.surebox.title = title;
+            app.surebox.neirong = neirong;
+            $("#sureboxback").css("top", "0");
+            $("#surebox_anniu_sure").click(function () {
+                $("#sureboxback").css("top", "100%");
+                fun();
+            })
+            $("#surebox_anniu_cancel").click(function () {
+                $("#sureboxback").css("top", "100%");
+            })
+        }
+        //确认框
+        function confirm(title, neirong, fun) {
+            app.confirm.title = title;
+            app.confirm.neirong = neirong;
+            $("#confirmback").css("top", "0");
+            $("#confirm_anniu").click(function () {
+                $("#confirmback").css("top", "100%");
+                fun();
+            })
+        }
+        var app = new Vue({
+            el: "#app",
+            data: {
+                body: vm.data,
+                asid_tables: [],//[{name:"c#",type:"0"}]
+                type_big_lists: [],//[{big:"c#",small:[{key:"0",value:".net Core"},{key:"1",value:"EF"}]}]
+                type_change: "",//用于在input发生改变时，让计算函数进行计算的变量
+                type_small_lists: [],//[{key:"0",value:".net Core"},{key:"1",value:"EF"}]
+                anniutype: "新增",//用于改变选择框标题
+                surebox: {
+                    title: "",
+                    neirong: "",
+                },
+                confirm: {
+                    title: "",
+                    neirong: "",
+                },
+            },
+            methods: {
+                method: function () { return vm.methods; },
+                tourl: function (a) {
+                    document.location = "/Home/jiluyemian";
+                    document.cookie = "type=" + a.type + ";Path=/Home";
+                },
+                addnew: function () {
+                    verifylogin(function () {
+                        $("#jiluback").css("top", "0");
+                        $("#jilu_sure").click(function () {
+                            var TypeBig = 0;
+                            var TypeSmall = 0;
+                            var TypeSmallkey = 0;
+                            var TypeBigkey = 0;
+                            //判断新增语言是否有旧本
+                            for (var i = 0; i < app.asid_tables.length; i++) {
+                                if (TypeBigkey <= app.asid_tables[i].type) {
+                                    TypeBigkey = app.asid_tables[i].type + 1;
+                                }
+                                if ($("#jilu_yuyan").val() == app.asid_tables[i].name) {
+                                    TypeBig = app.asid_tables[i].type;
+                                    //匹配语言和框架
+                                    for (j = 0; j < app.type_big_lists.length; j++) {
+                                        if ($("#jilu_yuyan").val() == app.type_big_lists[j].big) {
+                                            //判断框架是否有旧本
+                                            for (z = 0; z < app.type_big_lists[j].small.length; z++) {
+                                                if (TypeSmallkey <= app.type_big_lists[j].small[z].key) {
+                                                    TypeSmallkey = app.type_big_lists[j].small[z].key + 1;
+                                                }
+                                                if ($("#jilu_kuangjia").val() == app.type_big_lists[j].small[z].value) {
+                                                    TypeSmall = app.type_big_lists[j].small[z].key;
+                                                    break;
+                                                } else {
+                                                    TypeSmall = TypeSmallkey;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                } else {
+                                    //js里面,for if 的{}不是作用域，i不会被回收
+                                    TypeBig = TypeBigkey;
+                                    TypeSmall = 0;
+                                }
+                            }
+                            sureorcancel("提示", "是否确认新增?", function () {
+                                $.ajax({
+                                    data: {
+                                        bigtitle: $("#jilu_yuyan").val(),
+                                        typebig: TypeBig,
+                                        smalltitle: $("#jilu_kuangjia").val(),
+                                        typesmall: TypeSmall,
+                                        title: $("#jilu_title_title").val(),
+                                        neirong: editor.txt.html()
+                                    },
+                                    dataType: "json",
+                                    type: "post",
+                                    url: '/Ajax/AddNew',
+                                    success: function (a) {
+                                        confirm("提示", a.result, function () {
+                                            //取消绑定的click事件
+                                            $("#jilu_sure").unbind("click");
+                                            location.reload();
+                                        });
+                                    },
+                                    error: function (a) {
+                                        $("#jilu_sure").unbind("click");
+                                        confirm("错误", a.result, function () { });
+                                    }
+                                })
+                            })
+                        })
+                    })
+                },
+                index: function () {
+                    $.ajax({
+                        url: '/Ajax/Indexasid',
+                        type: 'post',
+                        success: function (a) {
+                            app.asid_tables = a.result.asid_lists;
+                            app.type_big_lists = a.result.type_big_lists;
+                        },
+                        error: function (a) {
+                            confirm("错误", a.result, function () { });
+                        }
+                    })
+                },
+            },
+            watch: {
+                type_change: function (a) {
+                    for (var i = 0; i < app.type_big_lists.length; i++) {
+                        if (a == app.type_big_lists[i].big) {
+                            app.type_small_lists = app.type_big_lists[i].small;
+                            return;
+                        }
+                        else {
+                            app.type_small_lists = []
+                        }
+                    }
+                }
+            },
+        })
+        //加载asid
+        app.index();
+        //验证码,同时绑定登录事件,不支持IE8
+        var zhuangtai = yanzhengma("log_anniu_logon", "yzm1", function () {
+            return $("#yzm_input").val();
+        }, function () {
+            var zhanghao = $("#zhanghao_input").val();
+            var mima = $("#mima_input").val();
+            $.ajax({
+                data: {
+                    zhanghao: zhanghao,
+                    mima: mima,
+                },
+                dataType: "json",
+                type: "post",
+                url: '/Ajax/Login',
+                success: function (a) {
+                    confirm("提示", a.result, function () {
+                        location.reload();
+                    });
+                },
+                error: function (a) {
+                    $("#jilu_sure").unbind("click");
+                    confirm("错误", a.result, function () { });
+                }
+            })
+        }, function () {
+            confirm("提示", "验证码错误", function () { });
+        });
+        //富文本编辑器
+        var E = window.wangEditor
+        var editor = new E('#editor')
+        editor.create()
+</script>
+</body>
+</html>

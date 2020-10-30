@@ -1,0 +1,118 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    font-style: normal;
+    background-color: #f1f1f1;
+    color: #333;
+}
+/*#app {
+            width: 80%;
+            height:100%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color:white;
+            overflow:hidden;
+        }*/
+#head {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #7fdfd280;
+    box-shadow: 0 10px 5px #888888;
+    z-index: 2;
+}
+
+.head-words {
+    position: relative;
+    top: 20%;
+    text-align: center;
+    width: 8%;
+    height: 80%;
+    text-align: center;
+    float: left;
+}
+
+.head-text {
+    color: red;
+    text-decoration: none;
+    cursor:pointer;
+}
+
+    .head-text:hover {
+        color: blue;
+        text-decoration: underline;
+    }
+
+#asid {
+    position: fixed;
+    left: -50px;
+    top: 15%;
+    height: 80px;
+    width: 80px;
+    background-color: #01ef8c54;
+    border-radius: 40px;
+    box-shadow: 0 0 8px #09d736;
+    z-index: 3;
+}
+
+#asid-mulu {
+    position: absolute;
+    top: -20px;
+    left: -6%;
+    height: 600px;
+    width: 400%;
+    background-color: #a5f3cfcf;
+    border-radius: 15px;
+    border: 1px solid navajowhite;
+    display: none;
+    overflow: hidden;
+    box-shadow: 10px 10px 5px #888888;
+    z-index: 2;
+}
+
+#asid-mulu-title-mulu {
+    float: left;
+    margin-left: 20%
+}
+
+#asid-mulu-title-tuodong {
+    width: 15%;
+    height: 7%;
+    float: right;
+    background-color: #50e5c3f7;
+    text-align: center;
+    border-radius: 0 0 0 100%;
+    cursor: move
+}
+
+#asid-mulu-table {
+    top: 10%;
+    height: 87%;
+    margin-left: 10%;
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    overflow: scroll;
+    box-shadow: 0 0 5px #595353;
+    border-radius: 5px;
+}
+
+    #asid-mulu-table::-webkit-scrollbar {
+        width: 0;
+    }
+
+.asid-gezi {
+    width: 99%;
+    height: 10%;
+    text-align: center;
+    border: 1px solid #595353;
+    cursor: pointer;
+}

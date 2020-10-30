@@ -1,0 +1,96 @@
+﻿
+#jilu_yemian {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 80%;
+    height: 70%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#jilu_head {
+    width: 100%;
+    height: 5%;
+    position: absolute;
+    background-color: #3de4a7a1;
+    box-shadow: 0 5px 5px #aaadac;
+}
+
+#box_cancel {
+    width: 10%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+    left: 95%;
+}
+
+    #box_cancel span {
+        font-size: 30px;
+        font-family: "华文琥珀";
+        color: #ef1313;
+        cursor: pointer;
+    }
+
+.jilusclass {
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#jilu_titletext {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#jilu_types {
+    top: 10%;
+    height: 5%;
+}
+
+#jilu_type_big {
+    float: left;
+}
+
+#jilu_type_small {
+    float: right;
+}
+
+#jilu_title {
+    top: 15%;
+    height: 5%;
+}
+
+#jilu_neirong {
+    top: 20%;
+    height: 55%;
+}
+
+#jilu_annius {
+    top: 88%;
+    height: 10%;
+}
+
+#jiluback input {
+    border-radius: 3px;
+    border: 2px solid #2eb5b2;
+}
+
+#jiluback button {
+    background-color: #30ecaccf;
+    border: 0;
+    border-radius: 2px;
+    width: 50px;
+    height: 30px;
+    box-shadow: 2px 2px 3px #615e5e;
+}
+
+#jilu_sure {
+    float: left;
+}
+
+#jilu_cancel {
+    float: right;
+}

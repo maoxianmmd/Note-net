@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "主页";
+}
+@section styles{
+    <link href="~/css/index.css" rel="stylesheet" />
+}
+<div class="box">
+    <div class="out-front"></div>
+    <div class="out-back"></div>
+    <div class="out-left"></div>
+    <div class="out-right"></div>
+    <div class="out-top"></div>
+    <div class="out-bottom"></div>
+</div>
+
+@section scripts{
+    <script>
+        //解决wiondow.onload会被覆盖的问题
+        $(function () {
+            $(".box").mouseover(function () {
+                $(".out-front").css("transform", "translateZ(150px)");
+                $(".out-back").css("transform", "rotateY(180deg) translateZ(150px)");
+                $(".out-left").css("transform", "rotateY(90deg) translateZ(150px)");
+                $(".out-right").css("transform", "rotateY(-90deg) translateZ(150px)");
+                $(".out-top").css("transform", "rotateX(90deg) translateZ(150px)");
+                $(".out-bottom").css("transform", "rotateX(-90deg) translateZ(150px)");
+            })
+            $(".box").mouseout(function () {
+                $(".out-front").css("transform", "translateZ(100px)");
+                $(".out-back").css("transform", "rotateY(180deg) translateZ(100px)");
+                $(".out-left").css("transform", "rotateY(90deg) translateZ(100px)");
+                $(".out-right").css("transform", "rotateY(-90deg) translateZ(100px)");
+                $(".out-top").css("transform", "rotateX(90deg) translateZ(100px)");
+                $(".out-bottom").css("transform", "rotateX(-90deg) translateZ(100px)");
+            })
+        })
+        vm = {
+            data: {},
+            methods: {}
+        }
+    </script>
+}

@@ -1,0 +1,83 @@
+﻿#jilu {
+    position: absolute;
+    left: 40%;
+    width: 70%;
+    transform: translateX(-50%);
+    margin-top: 7%;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: -10px 10px 5px #888888;
+    padding-bottom: 20px;
+}
+
+.jilu_table {
+    margin-top: 20px;
+    width: 90%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 5px #888888;
+    border-radius: 4px;
+}
+
+.jilu_table_title {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.jilu_table_neirong {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#jilu_asid {
+    position: fixed;
+    right: 3%;
+    width: 20%;
+    height: 70%;
+    margin-top: 10%;
+    background-color: white;
+    box-shadow: 10px 10px 5px #888888;
+    overflow: scroll;
+}
+
+    #jilu_asid::-webkit-scrollbar {
+        width: 0;
+    }
+
+.changeordelate {
+    float: right;
+    cursor: pointer;
+    color: red;
+}
+
+    .changeordelate:hover {
+        color: blue;
+    }
+
+.jilu_asid_big {
+    width: 99%;
+    height: 70px;
+    text-align: center;
+    background-color: #23c7d829;
+    border-radius: 5px;
+    border: 1px solid #00000036;
+    line-height: 70px;
+    box-shadow: 0 0 5px;
+    cursor: pointer;
+}
+
+.jilu_asid_small {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    background-color: #6e9bef29;
+    border-radius: 5px;
+    border: 1px solid #00000036;
+    line-height: 80px;
+    box-shadow: 0 0 5px;
+}
+
+.jilu_asid_boxs {
+    overflow: hidden;
+}
