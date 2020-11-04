@@ -5,4 +5,4 @@
 1.要使用本项目做笔记需要下载sql server(我的版本是2012)，仅需创建一个名为"maoxianshiyanshi"的数据库，并创建一个名为user的表。  
 1.2.user表里的数据类型是 id -int, name -varchar(MAX), mima -varchar(MAX), tables -varchar(MAX)。  
 2.修改数据库字符串为自己的数据库字符串，在/gerenlianxisheng/gerenlianxisheng/appsettings.json 中，修改第一行的value值即可。  
-完成以上步骤运行网站，注册账号即可使用
+完成以上步骤运行网站，注册账号即可使用（账号信息存在自己建的user表里）
